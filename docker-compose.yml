@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  ans_master:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - ./config:/etc/ansible:rw
+    ports:
+      - 22:22
+  client1:
+    build:
+      context: ./clients
+      dockerfile: Dockerfile
+    ports:
+      - 22:22
+    depends_on:
+      - ans_master
+  client2:
+    build: 
+      context: ./clients
+      dockerfile: Dockerfile
+    ports:
+      - 22:22
+    depends_on:
+      - ans_master
