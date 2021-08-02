@@ -7,20 +7,15 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./config/ansible:/etc/ansible:rw
-      - ./config/ssh-server:/root/.ssh:rw
   client1:
     build:
       context: ./clients
       dockerfile: Dockerfile
-    volumes:
-      - ./config/ssh-client:/root/.ssh:rw
     depends_on:
       - ans_master
   client2:
     build: 
       context: ./clients
       dockerfile: Dockerfile
-    volumes:
-      - ./config/ssh-client:/root/.ssh:rw
     depends_on:
       - ans_master
