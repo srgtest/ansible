@@ -1,0 +1,3 @@
+[office]
+client1 ansible_ssh_host=client1
+client2 ansible_ssh_host=client2
