@@ -1,0 +1,15 @@
+---
+- name: Install default Apache Web Server
+  hosts: PRODUCTION_WEB
+  become: yes
+
+  tasks:
+  - name: Update apt packages
+    apt:
+      update_cache: yes
+
+  - name: Install Apache WebServer
+    apt: name=apache2 state=latest
+
+  - name: Start Apache and Enable
+    service: name=apache2 state=started enabled=yes
