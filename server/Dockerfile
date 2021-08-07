@@ -8,5 +8,5 @@ RUN mkdir /home/ansible
 COPY ./.ssh /root/.ssh
 RUN chmod -R go= /root/.ssh && chown -R root:root ~/.ssh
 COPY ./script.sh /home/ansible
-WORKDIR /home/ansible
+WORKDIR /etc/ansible
 ENTRYPOINT ["/home/ansible/script.sh"]
