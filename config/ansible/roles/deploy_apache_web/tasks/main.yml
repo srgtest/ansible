@@ -1,0 +1,45 @@
+---
+# tasks file for deploy_apache_web
+- name: Check and Print Linux Version
+  debug: var=ansible_os_family
+
+- block: #=======Block for RedHat=======
+
+    - name: Install Apache Web Server for RedHat
+      yum: name=httpd state=latest
+
+    - name: Start Web Servers and Enable for RedHat
+      service: name=httpd state=started enabled=yes
+
+  when: ansible_os_family == "RedHat"
+
+- block: #=======Block for Debian=======
+
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+
+    - name: Install Apache Web Server for Debian
+      apt: name=apache2 state=latest
+
+    - name: Start Web Servers and Enable for Debian
+      service: name=apache2 state=started enabled=yes
+
+  when: ansible_os_family == "Debian"
+
+- name: Generate INDEX.HTML
+  template: src=index.j2 dest={{ destin_folder }}/index.html mode=0555
+  notify: 
+    - Restart Apache RedHat
+    - Restart Apache Debian
+
+- name: Copy MyPage to Servers
+  copy: src={{ item }} dest={{ destin_folder }} mode=0555
+  loop:
+    - "image1.jpeg"
+    - "image2.jpeg"
+    - "image3.jpeg"
+    - "image4.jpeg"
+  notify: 
+    - Restart Apache RedHat
+    - Restart Apache Debian
