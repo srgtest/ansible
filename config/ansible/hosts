@@ -1,6 +1,6 @@
 [office]
-client1 ansible_ssh_host=client1
-client2 ansible_ssh_host=client2
+client1 ansible_ssh_host=client1 owner=Oleg
+client2 ansible_ssh_host=client2 owner=Maks
 
 [PRODUCTION_WEB]
 web_srv ansible_ssh_host=3.19.62.184
