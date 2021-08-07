@@ -3,4 +3,6 @@ client1 ansible_ssh_host=client1 owner=Oleg
 client2 ansible_ssh_host=client2 owner=Maks
 
 [PRODUCTION_WEB]
-web_srv ansible_ssh_host=3.19.62.184
+web_srv ansible_ssh_host=18.188.95.218
+web_srv2 ansible_ssh_host=3.135.247.219 ansible_user=admin
+web_srv3 ansible_ssh_host=52.14.223.228 ansible_user=ec2-user
