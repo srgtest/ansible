@@ -1,0 +1,34 @@
+---
+- name: Cool Playbook for Variables
+  hosts: "{{ MYHOSTS }}"
+  become: yes
+
+  vars:
+    message1: Hi!
+    message2: World!
+    secret: QWEsadsd123
+
+  tasks:
+  - name: Print Secret variable
+    debug:
+      var: secret
+
+  - debug:
+      msg: "Secrets: {{ secret }}"
+
+  - debug:
+      msg: "Owner server: {{ owner }}"
+
+  - set_fact: full_message="{{ message1 }} {{ message2 }} from {{ owner }}"
+
+  - debug:
+      var: full_message
+
+  - debug:
+      var: ansible_distribution
+
+  - shell: uptime
+    register: results
+
+  - debug:
+      var: results.stdout
