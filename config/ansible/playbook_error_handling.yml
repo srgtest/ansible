@@ -1,0 +1,22 @@
+---
+- name: Ansible lesson 19
+  hosts: office
+  any_errors_fatal: yes
+  become: yes
+
+  tasks:
+  - name: Task 1
+    yum: name=treee state=latest
+    ignore_errors: yes
+
+  - name: Task 2
+    shell: cat /home/file1.txt
+    register: results
+#    failed_when: results.rc == 0
+#    failed_when: "'World' in results.stdout"
+
+  - debug:
+      var: results
+
+  - name: Task 3
+    shell: echo Hi my friend!
