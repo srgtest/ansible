@@ -1,0 +1,27 @@
+---
+- name: Ansible Lesson 20 Vault
+  hosts: office
+  become: yes
+
+  vars:
+    admin_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65343034306538656239663331333934366234616263616539363531323332356131336634313663
+          6138396336383431656265313439613537313562613065310a306335666230303730646231653664
+          66613736373263663065356537616465616631356165373563333062393130303461656438643334
+          3536306132313935610a373731326638373036333266366161333336326339303262323230326132
+          3165
+
+  tasks:
+  - name: Install pkg tree
+    apt: name=tree state=latest
+
+  - name: Create config file
+    copy:
+      dest: "/home/config.conf"
+      content: |
+        port = 1408
+        log = 7days
+        home = /home/
+        user = admin
+        password = {{ admin_password }}
