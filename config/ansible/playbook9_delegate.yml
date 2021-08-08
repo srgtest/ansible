@@ -1,0 +1,49 @@
+---
+- name: Playbook example include
+  hosts: office
+  become: yes
+
+  vars:
+    mytext: "Hello World!"
+
+  tasks:
+  - name: Ping test
+    ping:
+
+  - name: Unregister Server
+    shell: echo This Server {{ inventory_hostname }} was derigister from our Load Balancer, node name {{ ansible_nodename }} >> /home/log.txt
+    delegate_to: 127.0.0.1
+
+  - name: Update DB
+    shell: echo Update DataBase
+    run_once: true
+
+  - name: Create file1
+    copy:
+      dest: /home/file1.txt
+      content:
+        Text Line, in file1
+        Text Line, in file1
+        Text Line, {{ mytext }}
+    delegate_to: client2
+
+  - name: Create file2
+    copy:
+      dest: /home/file2.txt
+      content:
+        Text Line, in file2
+        Text Line, in file2
+        Text Line, {{ mytext }}
+
+  - name: Reboot servers
+    shell: sleep 3 && reboot now
+    async: 1
+    poll: 0
+
+  - name: Wait till my server will come up online
+    wait_for:
+      host: "{{ inventory_hostname }}"
+      state: started
+      delay: 5
+      timeout: 40
+    delegate_to: 127.0.0.1
