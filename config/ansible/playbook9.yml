@@ -1,0 +1,17 @@
+---
+- name: Playbook example include
+  hosts: office
+  become: yes
+
+  vars:
+    mytext: "Hello World!"
+
+  tasks:
+  - name: Ping test
+    ping:
+
+  - name: Create Folders
+    include: create_folders.yml
+
+  - name: Create Files
+    include: create_files.yml
